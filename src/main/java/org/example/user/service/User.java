@@ -1,19 +1,25 @@
 package org.example.user.service;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.example.authority.Authority;
+import org.example.authority.UserAuthority;
 import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
+import java.util.List;
 
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_user")
 public class User {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Comment("아이디")
         private Long id;
 
         @Column(unique = true, nullable = false, length = 50)
@@ -28,4 +34,6 @@ public class User {
         @Comment("활성화 여부")
         private Boolean enabled;
 
+        @OneToMany(mappedBy = "user")
+        private List<UserAuthority> userAuthorities;
 }
