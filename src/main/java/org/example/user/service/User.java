@@ -34,6 +34,6 @@ public class User {
         @Comment("활성화 여부")
         private Boolean enabled;
 
-        @OneToMany(mappedBy = "user")
+        @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
         private List<UserAuthority> userAuthorities;
 }

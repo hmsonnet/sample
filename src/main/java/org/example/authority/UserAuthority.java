@@ -23,7 +23,7 @@ public class UserAuthority {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "authority_id")
     private Authority authority;
 }
