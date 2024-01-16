@@ -1,0 +1,25 @@
+server:
+    port: 8350
+
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/sampledb
+        username: hmson
+        password: hm1218
+        driver-class-name: org.postgresql.Driver
+    mvc:
+      view:
+          prefix: /
+          suffix: .html
+    jpa:
+        hibernate:
+            ddl-auto: none
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true
+                use_sql_comments: true
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+    devtools:
+        livereload:
+            enabled: true
