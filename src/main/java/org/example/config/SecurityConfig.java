@@ -1,6 +1,8 @@
 package org.example.config;
 
+import org.example.filter.JwtTokenFilter;
 import org.example.security.CustomUserDetailsService;
+import org.example.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -24,6 +28,15 @@ public class SecurityConfig {
         this.customUserDetailsService = customUserDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
+
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
+    @Autowired
+    public void configureSuccess(AuthenticationSuccessHandler authenticationSuccessHandler) {
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+    }
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,6 +60,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
             return http
                     .cors().and().csrf().disable()
+                    .addFilterBefore(new JwtTokenFilter(jwtTokenUtil), UsernamePasswordAuthenticationFilter.class)
                     .authorizeRequests(authorize -> authorize
                             .antMatchers("/admin/**").hasRole("ADMIN")
                             .antMatchers("/user/**").hasRole("USER")
@@ -55,7 +69,7 @@ public class SecurityConfig {
                     .formLogin(formLogin -> formLogin
                             .loginPage("/login")
                             .loginProcessingUrl("/actionLogin")
-                            .defaultSuccessUrl("/index")
+                            .successHandler(authenticationSuccessHandler)
                             .failureUrl("/login?error")
                             .permitAll()
                     )
@@ -65,4 +79,5 @@ public class SecurityConfig {
                     )
                     .build();
     }
+
 }

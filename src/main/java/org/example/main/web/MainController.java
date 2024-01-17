@@ -8,13 +8,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class MainController {
 
     Logger logger = org.slf4j.LoggerFactory.getLogger(MainController.class);
 
     @GetMapping("/index")
-    public String index() {
+    public String index(
+            HttpServletRequest request
+    ) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
