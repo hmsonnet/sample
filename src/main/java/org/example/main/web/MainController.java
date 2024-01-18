@@ -36,12 +36,6 @@ public class MainController {
             }
         }
 
-        String token = response.getHeader("Authorization");
-
-
-        String test = request.getHeader("Authorization");
-
-
         return "/index";
     }
 }

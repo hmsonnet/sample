@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    private JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
 
     public JwtTokenFilter(JwtTokenUtil jwtTokenUtil) {
         this.jwtTokenUtil = jwtTokenUtil;
@@ -24,7 +24,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {   // 인증이 되었을 때만
             // 사용자 정보 얻기
             Object principal = authentication.getPrincipal();
@@ -35,7 +35,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 response.addHeader("Authorization", "Bearer " + token);
                 // 여기서 필요한 다른 세션 정보를 얻을 수 있음
             }
-        }
+        }*/
 
         chain.doFilter(request, response);
     }
