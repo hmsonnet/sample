@@ -6,18 +6,22 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class MainController {
 
     Logger logger = org.slf4j.LoggerFactory.getLogger(MainController.class);
 
-    @GetMapping("/index")
+    @GetMapping({"/index", "/"})
     public String index(
             HttpServletRequest request
+            , HttpServletResponse response
+            , Model model
     ) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -32,6 +36,12 @@ public class MainController {
             }
         }
 
-        return "index";
+        String token = response.getHeader("Authorization");
+
+
+        String test = request.getHeader("Authorization");
+
+
+        return "/index";
     }
 }

@@ -13,6 +13,34 @@
         <input type="password" id="password" name="password" placeholder="Password">
         <button type="submit" id="loginBtn">Login</button>
     </form>
+    <!--<button type="submit" id="loginBtn">Login</button>-->
+
+<!--    <script>
+        const loginBtn = document.querySelector('#loginBtn');
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const username = document.querySelector('#username').value;
+            const password = document.querySelector('#password').value;
+            const data = {username, password};
+            fetch('/actionLogin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': ''
+                },
+                body: JSON.stringify(data)
+            }).then((response) => {
+                if (response.status === 200) {
+                    alert('로그인 성공');
+
+                    console.log(response);
+
+                    //window.location.href = '/';
+                } else {
+                    alert('로그인 실패');
+                }
+            });
+        });
+    </script>-->
 
 </body>
 </html>
