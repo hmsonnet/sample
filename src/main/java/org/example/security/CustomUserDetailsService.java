@@ -12,24 +12,17 @@ import javax.annotation.Resource;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    /*private final PasswordEncoder passwordEncoder;*/
-
     @Resource(name = "userService")
     private UserService userService;
 
-    // 생성자를 통해 PasswordEncoder 주입
-    /*public CustomUserDetailsService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }*/
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByUsername(username);
-        return org.springframework.security.core.userdetails.User
-                .builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .roles(user.getUserAuthorities().get(0).getAuthority().getRole())
-                .build();
+        User user = userService.findByUsername(username); // 사용자 정보 조회
+        return org.springframework.security.core.userdetails.User // UserDetails 객체 생성
+                .builder()  // 빌더 패턴
+                .username(user.getUsername())   // 사용자 이름
+                .password(user.getPassword())   // 사용자 비밀번호
+                .roles(user.getUserAuthorities().get(0).getAuthority().getRole())   // 사용자 권한
+                .build();  // UserDetails 객체 생성
     }
 }

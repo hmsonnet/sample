@@ -15,32 +15,30 @@
     </form>
     <!--<button type="submit" id="loginBtn">Login</button>-->
 
-<!--    <script>
-        const loginBtn = document.querySelector('#loginBtn');
-        loginBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const username = document.querySelector('#username').value;
-            const password = document.querySelector('#password').value;
-            const data = {username, password};
-            fetch('/actionLogin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': ''
-                },
-                body: JSON.stringify(data)
-            }).then((response) => {
-                if (response.status === 200) {
+
+    <script>/*
+        (function() {
+            document.querySelector('#loginBtn').addEventListener('click', function() {
+                fetch('/actionLogin', {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: document.querySelector('#username').value,
+                        password: document.querySelector('#password').value
+                    })
+                }).then(function(response) {
+
                     alert('로그인 성공');
+                    location.href = '/index';
 
-                    console.log(response);
-
-                    //window.location.href = '/';
-                } else {
-                    alert('로그인 실패');
-                }
+                }).catch(function(error) {
+                    console.log('Request failed', error);
+                });
             });
-        });
-    </script>-->
+        })();*/
+    </script>
 
 </body>
 </html>
