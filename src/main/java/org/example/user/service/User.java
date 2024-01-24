@@ -3,7 +3,6 @@ package org.example.user.service;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.authority.Authority;
 import org.example.authority.UserAuthority;
 import org.hibernate.annotations.Comment;
 

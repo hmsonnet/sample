@@ -1,13 +1,15 @@
 package org.example.authority;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "tb_authority")
 public class Authority {

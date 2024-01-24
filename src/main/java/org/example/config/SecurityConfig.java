@@ -1,15 +1,18 @@
 package org.example.config;
 
+import org.example.filter.JsonAuthenticationFilter;
 import org.example.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -44,18 +47,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        /*
         AuthenticationManagerBuilder amb = http.getSharedObject(AuthenticationManagerBuilder.class ); // AuthenticationManagerBuilder 객체 가져오기
         AuthenticationManager authenticationManager = amb.build(); // AuthenticationManager 객체 생성
 
         http.authenticationManager(authenticationManager); // AuthenticationManager 설정
-         */
 
         return http
                     .cors().and().csrf().disable()  // csrf 토큰 비활성화
 
-                    //.addFilterBefore(new JsonAuthenticationFilter(authenticationManager)
-                    //        , UsernamePasswordAuthenticationFilter.class) // 로그인 처리를 위한 필터 추가
+                    .addFilterBefore(new JsonAuthenticationFilter(authenticationManager)
+                            , UsernamePasswordAuthenticationFilter.class) // 로그인 처리를 위한 필터 추가
 
                     .authorizeRequests(authorize -> authorize   // 요청에 대한 권한 설정
                             .antMatchers("/admin/**").hasRole("ADMIN") // admin/** 경로는 ADMIN 권한이 있어야 접근 가능
