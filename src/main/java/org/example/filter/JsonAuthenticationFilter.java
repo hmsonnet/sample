@@ -80,7 +80,7 @@ public class JsonAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         // 토큰을 response의 헤더에 저장
         response.addHeader("Authorization", "Bearer " + token);
 
-        super.successfulAuthentication(request, response, chain, authResult);
-        chain.doFilter(request, response);
+        //super.successfulAuthentication(request, response, chain, authResult);
+        //chain.doFilter(request, response);
     }
 }
