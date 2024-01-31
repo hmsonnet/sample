@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 public class JsonAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private static final String SECRET_KEY = "ASDFASFQWER3425243564236423563425GSDFGDFBGFSDFGSDFGDSFGDSFGWERTQQWEAZSXCVX";
+    private static final String SECRET_KEY = "ASDFASFQWER342524356s42364sfqewr23563425GSDFGDFBGFSDFGSDFGDSFGDSFGWERTQQWEAZSXCVX";
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -61,7 +62,7 @@ public class JsonAuthenticationFilter extends UsernamePasswordAuthenticationFilt
                                             FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
         // 토큰 만료 시간 설정
-        Date expireTime = new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 10)); // 10시간 후 만료
+        Date expireTime = new Date(System.currentTimeMillis() + (1000 * 60 * 60)); // 1시간
 
         // 헤더 설정
         Map<String, Object> headerClaims = new HashMap<>();
@@ -79,6 +80,9 @@ public class JsonAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 
         // 토큰을 response의 헤더에 저장
         response.addHeader("Authorization", "Bearer " + token);
+
+        // 토큰을 세션에 저장
+        //request.getSession().setAttribute("token", token);
 
         //super.successfulAuthentication(request, response, chain, authResult);
         //chain.doFilter(request, response);

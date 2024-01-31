@@ -1,6 +1,7 @@
 package org.example.config;
 
 import org.example.filter.JsonAuthenticationFilter;
+import org.example.filter.JwtTokenFilter;
 import org.example.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -79,6 +80,8 @@ public class SecurityConfig {
                     .addFilterBefore(new JsonAuthenticationFilter(authenticationManager)
                             , UsernamePasswordAuthenticationFilter.class) // 로그인 처리를 위한 필터 추가
 
+                    .addFilterBefore(new JwtTokenFilter(), UsernamePasswordAuthenticationFilter.class) // 토큰 검증을 위한 필터 추가
+
                     .authorizeRequests(authorize -> authorize   // 요청에 대한 권한 설정
                             .antMatchers("/admin/**").hasRole("ADMIN") // admin/** 경로는 ADMIN 권한이 있어야 접근 가능
                             .antMatchers("/user/**").hasRole("USER") // user/** 경로는 USER 권한이 있어야 접근 가능
@@ -101,4 +104,5 @@ public class SecurityConfig {
 
                     .build();
     }
+
 }
